@@ -1,0 +1,36 @@
+{
+
+  "collection": "project1",
+  "key": "markers",
+  "props": {
+
+    "markers": [
+
+        {"marcin/timestamp": { 
+            "number": "A/12/22",
+            "location": "ground floor",
+            "locationOnDrawing": ["200", "400"],
+            "materialsUsed": ["collar", "mastic"],
+            "measurements": ["150", "150"],
+            "service": ["pipe"],
+            "completedBy": "username",
+            "photos": ["url to photo 1", "url to photo 2"],
+            "photos_after": ["url to photo 1", "url to photo 2"]
+
+        }},
+
+        {"carl/timestamp": { 
+          "number": "B/12/22",
+          "location": "first floor",
+          "locationOnDrawing": ["200", "400"],
+          "materialsUsed": ["firebatt", "mastic", "wrap"],
+          "measurements": ["150", "150"],
+          "service": ["duct", "cable"],
+          "completedBy": "username",
+          "photos_before": ["url to photo 1", "url to photo 2"],
+          "photos_after": ["url to photo 1", "url to photo 2"]
+
+      }}
+    ]
+  }
+}

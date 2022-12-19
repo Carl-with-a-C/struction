@@ -1,0 +1,14 @@
+{
+    "collection": "project1",
+    "key": "details",
+    "props": {
+      "address": "some_address",
+      "users": ["Marcin", "Carl"],
+      "materials": ["firebatt", "mastic", "collar", "wrap", "putty pad"],
+      "services": ["steel beam", "pipe", "duct", "cable tray", "cable"],
+      "locations": [
+          {"ground floor": "url to drawing"},
+          {"first floor": "url to drawing"}
+          ]
+    }
+  }

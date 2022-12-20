@@ -1,6 +1,9 @@
 import "./App.css";
+
 import { React, useState, useEffect } from "react";
 import { getLocations, getMarkers, getUser } from "./api";
+import SiteMap from "./components/SiteMap";
+import "leaflet/dist/leaflet.css";
 import {
   Sidebar,
   Menu,
@@ -8,6 +11,7 @@ import {
   useProSidebar,
   SubMenu,
 } from "react-pro-sidebar";
+
 
 function App() {
   const [user, setUser] = useState({
@@ -17,8 +21,8 @@ function App() {
       role: "worker",
       password: "worker123",
       projects: ["project1", "project2"],
-    },
-  });
+    },});
+    
   const [projectDetails, setProjectDetails] = useState({
     project: "project1",
     props: [{ "ground floor": "url" }, { "first floor": "url" }],
@@ -33,6 +37,7 @@ function App() {
 
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
+
   useEffect(() => {
     const userFromDb = getUser();
     setUser(userFromDb);
@@ -56,7 +61,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
+
           Welcome {user.key}, you are on {projectDetails.project}/{currLocation}
+
         </p>
       </header>
 
@@ -89,6 +96,7 @@ function App() {
           </Menu>
         ) : null}
       </Sidebar>
+      <SiteMap />
     </div>
   );
 }

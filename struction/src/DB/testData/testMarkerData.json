@@ -1,0 +1,19 @@
+{
+  "markers": [
+    {
+      "shortDescription": "Repairs",
+      "number": "A/12/22",
+      "location": "ground floor",
+      "locationOnDrawing": ["200", "400"],
+      "service": ["pipe"]
+    },
+
+    {
+      "shortDescription": "Measurements",
+      "number": "B/12/22",
+      "location": "first floor",
+      "locationOnDrawing": ["200", "400"],
+      "service": ["duct", "cable"]
+    }
+  ]
+}

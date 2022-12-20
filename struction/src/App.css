@@ -84,3 +84,12 @@ h6 {
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.map {
+  background-color: #738aaf;
+  position: absolute;
+  top: 10vh;
+  bottom: 0;
+  width: 100vw;
+  height: 100%;
+}

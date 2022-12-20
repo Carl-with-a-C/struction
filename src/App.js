@@ -12,7 +12,6 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 
-
 function App() {
   const [user, setUser] = useState({
     key: "offline_user",
@@ -21,8 +20,9 @@ function App() {
       role: "worker",
       password: "worker123",
       projects: ["project1", "project2"],
-    },});
-    
+    },
+  });
+
   const [projectDetails, setProjectDetails] = useState({
     project: "project1",
     props: [{ "ground floor": "url" }, { "first floor": "url" }],
@@ -61,9 +61,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-
           Welcome {user.key}, you are on {projectDetails.project}/{currLocation}
-
         </p>
       </header>
 

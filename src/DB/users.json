@@ -1,0 +1,10 @@
+{
+  "collection": "users",
+  "key": "test_user_fromDB",
+  "props": {
+    "mail": "mail@gmail.com",
+    "role": "worker",
+    "password": "worker123",
+    "projects": ["project1"]
+  }
+}

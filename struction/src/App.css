@@ -88,8 +88,8 @@ h6 {
 .map {
   background-color: #738aaf;
   position: absolute;
-  top: 0;
+  top: 10vh;
   bottom: 0;
   width: 100vw;
-  height: 100vw;
+  height: 100%;
 }

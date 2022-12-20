@@ -3,15 +3,17 @@ import { Marker } from "react-leaflet";
 // marker svg to be imported
 import MarkerPopup from "./MarkerPopup";
 import pinIcon from "../assets/DefaultPin.svg";
+import L from "leaflet";
 
 const SiteMarkers = ({ markersData }) => {
   const { markers } = markersData;
-
+  const icon = L.icon({ iconUrl: pinIcon });
+  console.log(Marker);
   const pins = markers.map((marker) => (
     <Marker
       key={marker.number}
       position={marker.locationOnDrawing}
-      iconUrl={pinIcon}
+      icon={icon}
       draggable={true}
       autoPan={true}
     >

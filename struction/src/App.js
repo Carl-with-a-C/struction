@@ -1,7 +1,9 @@
 import "./App.css";
-import "leaflet/dist/leaflet.css";
+
 import { React, useState, useEffect } from "react";
-import { getUser } from "./api";
+import { getLocations, getMarkers, getUser } from "./api";
+import SiteMap from "./components/SiteMap";
+import "leaflet/dist/leaflet.css";
 import {
   Sidebar,
   Menu,
@@ -9,46 +11,90 @@ import {
   useProSidebar,
   SubMenu,
 } from "react-pro-sidebar";
-import SiteMap from "./components/SiteMap";
+
 
 function App() {
   const [user, setUser] = useState({
-    user: "test_user",
-    projects: ["project1", "project2"],
-  });
+    key: "offline_user",
+    props: {
+      mail: "mail@gmail.com",
+      role: "worker",
+      password: "worker123",
+      projects: ["project1", "project2"],
+    },});
+    
   const [projectDetails, setProjectDetails] = useState({
     project: "project1",
     props: [{ "ground floor": "url" }, { "first floor": "url" }],
   });
-
+  //state for projects => locations => markers
+  //so menu for locations only after project
+  //after location markers appear
   const [markers, setMarkers] = useState([]);
-  const [location, setLocation] = useState("ground floor");
+  const [arrLocationForButton, setArrLocationForButton] = useState();
+  const [currLocation, setCurrLocation] = useState("ground floor");
   const [isLoaded, setIsLoaded] = useState(false);
 
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
 
+  useEffect(() => {
+    const userFromDb = getUser();
+    setUser(userFromDb);
+    setIsLoaded(true);
+  }, [arrLocationForButton]);
+
+  const changeLocation = (e) => {
+    setCurrLocation(e.target.innerText);
+    //same as one below
+    setMarkers(getMarkers());
+  };
+  const getLocationsOfProject = () => {
+    //logic to get specified locations by project?
+    //Still not sure how it supposed to look in ready database, need example with multiple projects (2)
+    setArrLocationForButton(getLocations());
+  };
+  if (isLoaded === false) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div className="App">
       <header className="App-header">
         <p>
-          Welcome {user.user}, you are on {projectDetails.project}/{location}
+
+          Welcome {user.key}, you are on {projectDetails.project}/{currLocation}
+
         </p>
       </header>
 
       <Sidebar>
         <Menu>
           <SubMenu label="Menu">
-            <MenuItem> Projects </MenuItem>
             <SubMenu label="Projects">
-              <MenuItem> Project 1 </MenuItem>
-              <MenuItem> Project 2 </MenuItem>
+              {user.props.projects.map((project) => {
+                return (
+                  <MenuItem onClick={getLocationsOfProject} key={project}>
+                    {project}
+                  </MenuItem>
+                );
+              })}
             </SubMenu>
             <MenuItem> Manager Dashboard </MenuItem>
             <MenuItem> Offilne mode </MenuItem>
             <MenuItem> Loguot </MenuItem>
           </SubMenu>
         </Menu>
+        {arrLocationForButton ? (
+          <Menu>
+            <SubMenu label="Locations">
+              {arrLocationForButton.map((item) => (
+                <MenuItem key={item[0]} onClick={changeLocation}>
+                  {item[0]}
+                </MenuItem>
+              ))}
+            </SubMenu>
+          </Menu>
+        ) : null}
       </Sidebar>
       <SiteMap />
     </div>

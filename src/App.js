@@ -1,7 +1,6 @@
 import "./App.css";
-
 import { React, useState, useEffect } from "react";
-import { getLocations, getMarkers, getUser } from "./api";
+import { getUser, getProjectDetails } from "./utils/api";
 import SiteMap from "./components/SiteMap";
 import "leaflet/dist/leaflet.css";
 import {
@@ -22,15 +21,8 @@ function App() {
       projects: ["project1", "project2"],
     },
   });
-
-  const [projectDetails, setProjectDetails] = useState({
-    project: "project1",
-    props: [{ "ground floor": "url" }, { "first floor": "url" }],
-  });
-  //state for projects => locations => markers
-  //so menu for locations only after project
-  //after location markers appear
-  const [markers, setMarkers] = useState([]);
+  const [projectDetails, setProjectDetails] = useState();
+  const [currentMarkers, setCurrentMarkers] = useState([]);
   const [arrLocationForButton, setArrLocationForButton] = useState();
   const [currLocation, setCurrLocation] = useState("ground floor");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,20 +31,32 @@ function App() {
     useProSidebar();
 
   useEffect(() => {
-    const userFromDb = getUser();
-    setUser(userFromDb);
-    setIsLoaded(true);
+    //no authentication - no problem
+    getUser("test_user").then((user) => {
+      setUser(user);
+      setIsLoaded(true);
+    });
   }, [arrLocationForButton]);
 
   const changeLocation = (e) => {
     setCurrLocation(e.target.innerText);
-    //same as one below
-    setMarkers(getMarkers());
+    setCurrentMarkers(projectDetails.project[1]);
+    console.log(projectDetails.project[1]);
   };
-  const getLocationsOfProject = () => {
-    //logic to get specified locations by project?
-    //Still not sure how it supposed to look in ready database, need example with multiple projects (2)
-    setArrLocationForButton(getLocations());
+  const accessProjectDetails = (projectName) => {
+    getProjectDetails(projectName).then((res) => {
+      setProjectDetails(res);
+
+      //deleting old stuff
+      setCurrLocation("");
+      setCurrentMarkers("");
+      //creating new submenu for buttons
+      setArrLocationForButton(
+        res.project[0].props.locations.map((item) => {
+          return Object.keys(item);
+        })
+      );
+    });
   };
   if (isLoaded === false) {
     return <h1>Loading...</h1>;
@@ -60,9 +64,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Welcome {user.key}, you are on {projectDetails.project}/{currLocation}
-        </p>
+        {projectDetails ? (
+          <p>
+            Welcome {user.key}, you are on{" "}
+            {projectDetails.project[0].collection}/{currLocation}
+          </p>
+        ) : (
+          <p>Welcome {user.key}, choose your project</p>
+        )}
       </header>
 
       <Sidebar>
@@ -71,7 +80,10 @@ function App() {
             <SubMenu label="Projects">
               {user.props.projects.map((project) => {
                 return (
-                  <MenuItem onClick={getLocationsOfProject} key={project}>
+                  <MenuItem
+                    onClick={() => accessProjectDetails(project)}
+                    key={project}
+                  >
                     {project}
                   </MenuItem>
                 );

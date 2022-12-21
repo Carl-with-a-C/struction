@@ -8,7 +8,6 @@ import L from "leaflet";
 const SiteMarkers = ({ markersData }) => {
   const { markers } = markersData;
   const icon = L.icon({ iconUrl: pinIcon });
-  console.log(Marker);
   const pins = markers.map((marker) => (
     <Marker
       key={marker.number}

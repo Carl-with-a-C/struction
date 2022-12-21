@@ -1,8 +1,8 @@
-import "./App.css";
 import { React, useState, useEffect } from "react";
 import { getUser, getProjectDetails } from "./utils/api";
 import SiteMap from "./components/SiteMap";
 import "leaflet/dist/leaflet.css";
+import "./App.css";
 import {
   Sidebar,
   Menu,

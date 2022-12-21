@@ -3,8 +3,18 @@
     {
       "shortDescription": "Repairs",
       "number": "A/12/22",
-      "location": "ground floor",
-      "locationOnDrawing": ["200", "400"],
+      "locations": [
+        {
+          "floorName": "Ground Floor",
+          "floorURL": "https://www.thehouseplancompany.com/sites/default/files/blog_image_-_the_house_plan_company_-_plan_31378_1.jpg"
+        },
+        {
+          "floorName": "First Floor",
+          "floorURL": "https://thumbs.dreamstime.com/z/architectural-drawing-14723570.jpg"
+        }
+      ],
+
+      "locationOnDrawing": ["800", "400"],
       "service": ["pipe"]
     },
 
@@ -12,7 +22,7 @@
       "shortDescription": "Measurements",
       "number": "B/12/22",
       "location": "first floor",
-      "locationOnDrawing": ["200", "400"],
+      "locationOnDrawing": ["1000", "800"],
       "service": ["duct", "cable"]
     }
   ]

@@ -86,10 +86,27 @@ h6 {
 }
 
 .map {
-  background-color: #738aaf;
+  background: rgb(92, 135, 179);
+  background: linear-gradient(
+    157deg,
+    rgba(92, 135, 179, 1) 3%,
+    rgba(38, 88, 150, 1) 82%
+  );
   position: absolute;
   top: 10vh;
   bottom: 0;
   width: 100vw;
-  height: 100%;
+  height: 90%;
+  z-index: 1;
+}
+
+.floorButton {
+  z-index: 100;
+  background-color: #fff;
+  color: #000;
+  position: absolute;
+  top: 0;
+  left: 40%;
+  right: 40%;
+  margin: auto;
 }

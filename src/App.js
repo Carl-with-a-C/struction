@@ -21,6 +21,7 @@ function App() {
       projects: ["project1", "project2"],
     },
   });
+
   const [projectDetails, setProjectDetails] = useState();
   const [currentMarkers, setCurrentMarkers] = useState([]);
   const [arrLocationForButton, setArrLocationForButton] = useState();

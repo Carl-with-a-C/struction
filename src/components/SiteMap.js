@@ -5,14 +5,22 @@ import "leaflet/dist/leaflet.css";
 import testMarkerData from "../DB/testData/testMarkerData.json";
 import SiteMarkers from "./SiteMarkers";
 import L, { latLng } from "leaflet";
+import {
+  Sidebar,
+  Menu,
+  MenuItem,
+  useProSidebar,
+  SubMenu,
+} from "react-pro-sidebar";
 
 const SiteMap = () => {
-  const [currentFloor, setCurrentFloor] = useState(0);
-  let floorName = testMarkerData.markers[0].locations[currentFloor].floorName;
-  let floorURL = testMarkerData.markers[0].locations[currentFloor].floorURL;
+  // const [currentFloor, setCurrentFloor] = useState(0);
+  // let floorName = testMarkerData.markers[0].locations[currentFloor].floorName;
+  // let floorURL = testMarkerData.markers[0].locations[currentFloor].floorURL;
+  const floors = testMarkerData.markers[0].locations;
 
-  const [currentFloorName, setCurrentFloorName] = useState(floorName);
-  const [floorImage, setFloorImage] = useState(floorURL);
+  const [currentFloorName, setCurrentFloorName] = useState();
+  const [floorImage, setFloorImage] = useState(floors[0].floorURL);
 
   //Takes Floor data from testMarkerData -WILL CHANGE TO API DATA!!!
   const [bounds, setBounds] = useState([
@@ -22,7 +30,7 @@ const SiteMap = () => {
 
   useEffect(() => {
     const img = new Image();
-    img.src = floorURL;
+    img.src = floorImage;
 
     img.onload = () => {
       setBounds([
@@ -34,18 +42,19 @@ const SiteMap = () => {
       console.log("img error");
       console.log(err);
     };
-  }, [currentFloor, floorURL]);
+  }, [floorImage]);
 
   //CURRENTLY - LOGIC SET FOR 2 FLOORS - NEED TO CREATE SOLUTION FOR MULTIPLE FLOORS
-  const handleFloorBtnClick = () => {
-    currentFloor === 0
-      ? setCurrentFloor(currentFloor + 1)
-      : setCurrentFloor(currentFloor - 1);
-    setCurrentFloorName(floorName);
-    setFloorImage(floorImage);
-    console.log(currentFloor, "Btn Clicked");
+
+  const handleFloorBtnClick = (e) => {
+    // For CLEAN FLOOR BUTTON TOGGLE
+    // currentFloor === 0
+    //   ? setCurrentFloor(currentFloor + 1)
+    //   : setCurrentFloor(currentFloor - 1);
+
+    setCurrentFloorName(e.floorName);
+    setFloorImage(e.floorURL);
   };
-  console.log(bounds);
 
   //Bounds need to be dynamically adjusted to size of image - TASK 1
 
@@ -64,10 +73,10 @@ const SiteMap = () => {
       >
         <ImageOverlay
           //HARDCODED - needs to come from API
-          url={floorURL}
+          url={floorImage}
           bounds={bounds}
         >
-          <button
+          {/* <button
             className="floorButton"
             onClick={() => {
               handleFloorBtnClick();
@@ -76,7 +85,28 @@ const SiteMap = () => {
             {currentFloor === 0
               ? `${currentFloorName} >`
               : `< ${currentFloorName}`}
-          </button>
+          </button> */}
+
+          <Sidebar className="floorButton">
+            <Menu>
+              <SubMenu label="Select Floor">
+                {floors.map((floor) => {
+                  return (
+                    <MenuItem
+                      key={floor.floorURL}
+                      label={floor.floorName}
+                      value={floor}
+                      onClick={(e) => {
+                        handleFloorBtnClick(floor);
+                      }}
+                    >
+                      {floor.floorName}
+                    </MenuItem>
+                  );
+                })}
+              </SubMenu>
+            </Menu>
+          </Sidebar>
         </ImageOverlay>
         <SiteMarkers markersData={testMarkerData} />
       </MapContainer>

@@ -14,7 +14,7 @@ export const getProjectDetails = (projectName) => {
     return res.data.result;
   });
 };
-
+//set new marker and response with updated object of markers:
 export const postMarker = (projectName, newPinBody, user) => {
   ///api/markers/:project_name'
   const markerBody = {};
@@ -25,6 +25,22 @@ export const deleteMarker = (projectName, markerId) => {
   //: '/api/:project_name/:marker_id'
   return beStructionApi.delete(`/${projectName}/${markerId}`);
 };
+
+// response with updated array of markers
+// req.body
+// {
+// "marcin-timestamp": {
+// "id": "marcin-timestamp",
+// "number": "updated number",
+// "location": "ground floor",
+// "locationOnDrawing": ["200", "400"],
+// "materialsUsed": ["collar", "mastic"],
+// "measurements": ["150", "150"],
+// "service": ["pipe"],
+// "completedBy": "username",
+// "photos": ["url to photo 1", "url to photo 2"],
+// "photos_after": ["url to photo 1", "url to photo 2"]
+// }}
 
 export const patchMarker = (projectName, markerId) => {
   const patchBody = {};

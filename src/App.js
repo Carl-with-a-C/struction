@@ -40,12 +40,10 @@ function App() {
   const changeLocation = (floorObject) => {
     // e.preventDefault();
     ///FLOOROBJECT = {FLOORnAME : URL}
-  console.log(floorObject)
-    
-    
-    console.log(floorObject.url);
+    console.log(projectDetails.project[1]);
+
     setFloorImage(floorObject.url);
-setCurrFloor(floorObject.name);
+    setCurrFloor(floorObject.name);
     // setFloorImage(projectDetails.project[0].props.locations[0][currFloor]);
     // console.log(projectDetails.project[0].props.locations[0][currFloor]);
 
@@ -113,7 +111,7 @@ setCurrFloor(floorObject.name);
                 return (
                   //FLOOROBJECT = {FLOORnAME : URL}
                   <MenuItem
-                  value={floorObject}
+                    value={floorObject}
                     key={floorObject.name}
                     type="submit"
                     onClick={(e) => changeLocation(floorObject)}

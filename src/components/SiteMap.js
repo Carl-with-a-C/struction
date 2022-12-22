@@ -103,7 +103,10 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
             </Menu>
           </Sidebar> } */}
         </ImageOverlay>
-        <SiteMarkers markersData={testMarkerData} />
+        <SiteMarkers
+          markersData={projectDetails.project[1]}
+          currFloor={currFloor}
+        />
       </MapContainer>
     </main>
   ) : null;

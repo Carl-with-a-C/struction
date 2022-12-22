@@ -1,8 +1,8 @@
+import "./App.css";
 import { React, useState, useEffect } from "react";
 import { getUser, getProjectDetails } from "./utils/api";
 import SiteMap from "./components/SiteMap";
 import "leaflet/dist/leaflet.css";
-import "./App.css";
 import {
   Sidebar,
   Menu,
@@ -21,40 +21,34 @@ function App() {
       projects: ["project1", "project2"],
     },
   });
-
   const [projectDetails, setProjectDetails] = useState();
-  const [currentMarkers, setCurrentMarkers] = useState([]);
-  const [arrLocationForButton, setArrLocationForButton] = useState();
-  const [currLocation, setCurrLocation] = useState("ground floor");
+  const [arrFloorsForButton, setArrFloorsForButton] = useState();
+  const [currFloor, setCurrFloor] = useState("ground floor");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [floorImage, setFloorImage] = useState();
 
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
 
   useEffect(() => {
-    //no authentication - no problem
     getUser("test_user").then((user) => {
       setUser(user);
       setIsLoaded(true);
     });
-  }, [arrLocationForButton]);
+  }, [arrFloorsForButton]);
 
-  const changeLocation = (e) => {
-    setCurrLocation(e.target.innerText);
-    setCurrentMarkers(projectDetails.project[1]);
-    console.log(projectDetails.project[1]);
+  const changeLocation = (floorObject) => {
+    setFloorImage(floorObject.url);
+    setCurrFloor(floorObject.name);
   };
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
       setProjectDetails(res);
-
-      //deleting old stuff
-      setCurrLocation("");
-      setCurrentMarkers("");
-      //creating new submenu for buttons
-      setArrLocationForButton(
-        res.project[0].props.locations.map((item) => {
-          return Object.keys(item);
+      setCurrFloor("");
+      //Getting a set of images for floors from projectDetails
+      setArrFloorsForButton(
+        res.project[0].props.locations.map((floorObject) => {
+          return floorObject;
         })
       );
     });
@@ -68,7 +62,7 @@ function App() {
         {projectDetails ? (
           <p>
             Welcome {user.key}, you are on{" "}
-            {projectDetails.project[0].collection}/{currLocation}
+            {projectDetails.project[0].collection}/{currFloor}
           </p>
         ) : (
           <p>Welcome {user.key}, choose your project</p>
@@ -95,19 +89,30 @@ function App() {
             <MenuItem> Loguot </MenuItem>
           </SubMenu>
         </Menu>
-        {arrLocationForButton ? (
+        {arrFloorsForButton ? (
           <Menu>
             <SubMenu label="Locations">
-              {arrLocationForButton.map((item) => (
-                <MenuItem key={item[0]} onClick={changeLocation}>
-                  {item[0]}
-                </MenuItem>
-              ))}
+              {arrFloorsForButton.map((floorObject) => {
+                return (
+                  <MenuItem
+                    value={floorObject}
+                    key={floorObject.name}
+                    type="submit"
+                    onClick={(e) => changeLocation(floorObject)}
+                  >
+                    {floorObject.name}
+                  </MenuItem>
+                );
+              })}
             </SubMenu>
           </Menu>
         ) : null}
       </Sidebar>
-      <SiteMap />
+      <SiteMap
+        projectDetails={projectDetails}
+        currFloor={currFloor}
+        floorImage={floorImage}
+      />
     </div>
   );
 }

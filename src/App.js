@@ -40,12 +40,12 @@ function App() {
   const changeLocation = (floorObject) => {
     // e.preventDefault();
     ///FLOOROBJECT = {FLOORnAME : URL}
-
-    console.log(currFloor);
-    setCurrFloor(Object.keys(floorObject)[0]);
-    console.log(floorObject);
-    setFloorImage(floorObject[currFloor]);
-
+  console.log(floorObject)
+    
+    
+    console.log(floorObject.url);
+    setFloorImage(floorObject.url);
+setCurrFloor(floorObject.name);
     // setFloorImage(projectDetails.project[0].props.locations[0][currFloor]);
     // console.log(projectDetails.project[0].props.locations[0][currFloor]);
 
@@ -113,10 +113,12 @@ function App() {
                 return (
                   //FLOOROBJECT = {FLOORnAME : URL}
                   <MenuItem
-                    key={Object.keys(floorObject)[0]}
-                    onClick={() => changeLocation(floorObject)}
+                  value={floorObject}
+                    key={floorObject.name}
+                    type="submit"
+                    onClick={(e) => changeLocation(floorObject)}
                   >
-                    {Object.keys(floorObject)[0]}
+                    {floorObject.name}
                   </MenuItem>
                 );
               })}

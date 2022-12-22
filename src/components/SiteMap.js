@@ -13,21 +13,16 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 
-const SiteMap = () => {
+const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
   // const [currentFloor, setCurrentFloor] = useState(0);
   // let floorName = testMarkerData.markers[0].locations[currentFloor].floorName;
   // let floorURL = testMarkerData.markers[0].locations[currentFloor].floorURL;
-  const floors = testMarkerData.markers[0].locations;
 
-  const [currentFloorName, setCurrentFloorName] = useState();
-  const [floorImage, setFloorImage] = useState(floors[0].floorURL);
-
-  //Takes Floor data from testMarkerData -WILL CHANGE TO API DATA!!!
+  // const [floorImage, setFloorImage] = useState();
   const [bounds, setBounds] = useState([
     [0, 2600],
     [1740, 0],
   ]);
-
   useEffect(() => {
     const img = new Image();
     img.src = floorImage;
@@ -44,6 +39,8 @@ const SiteMap = () => {
     };
   }, [floorImage]);
 
+  //Takes Floor data from testMarkerData -WILL CHANGE TO API DATA!!!
+
   //CURRENTLY - LOGIC SET FOR 2 FLOORS - NEED TO CREATE SOLUTION FOR MULTIPLE FLOORS
 
   const handleFloorBtnClick = (e) => {
@@ -51,14 +48,12 @@ const SiteMap = () => {
     // currentFloor === 0
     //   ? setCurrentFloor(currentFloor + 1)
     //   : setCurrentFloor(currentFloor - 1);
-
-    setCurrentFloorName(e.floorName);
-    setFloorImage(e.floorURL);
+    // setFloorImage(e.floorURL);
   };
 
   //Bounds need to be dynamically adjusted to size of image - TASK 1
 
-  return (
+  return floorImage ? (
     <main className="siteMap">
       <MapContainer
         zoomControl={false}
@@ -87,9 +82,9 @@ const SiteMap = () => {
               : `< ${currentFloorName}`}
           </button> */}
 
-          <Sidebar className="floorButton">
+          {/* { <Sidebar className="floorButton">
             <Menu>
-              <SubMenu label="Select Floor">
+              { <SubMenu label="Select Floor">
                 {floors.map((floor) => {
                   return (
                     <MenuItem
@@ -104,14 +99,14 @@ const SiteMap = () => {
                     </MenuItem>
                   );
                 })}
-              </SubMenu>
+              </SubMenu> }
             </Menu>
-          </Sidebar>
+          </Sidebar> } */}
         </ImageOverlay>
         <SiteMarkers markersData={testMarkerData} />
       </MapContainer>
     </main>
-  );
+  ) : null;
 };
 
 export default SiteMap;

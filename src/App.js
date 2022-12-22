@@ -38,31 +38,16 @@ function App() {
   }, [arrFloorsForButton]);
 
   const changeLocation = (floorObject) => {
-    // e.preventDefault();
-    ///FLOOROBJECT = {FLOORnAME : URL}
-    console.log(projectDetails.project[1]);
-
     setFloorImage(floorObject.url);
     setCurrFloor(floorObject.name);
-    // setFloorImage(projectDetails.project[0].props.locations[0][currFloor]);
-    // console.log(projectDetails.project[0].props.locations[0][currFloor]);
-
-    // //floors
-    // console.log(projectDetails.project[0].props.locations);
-    // //markers
-    // console.log(projectDetails.project[1]);
   };
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
       setProjectDetails(res);
-
-      //deleting old stuff
       setCurrFloor("");
       //Getting a set of images for floors from projectDetails
-
       setArrFloorsForButton(
         res.project[0].props.locations.map((floorObject) => {
-          // console.log(floorObject);
           return floorObject;
         })
       );
@@ -109,7 +94,6 @@ function App() {
             <SubMenu label="Locations">
               {arrFloorsForButton.map((floorObject) => {
                 return (
-                  //FLOOROBJECT = {FLOORnAME : URL}
                   <MenuItem
                     value={floorObject}
                     key={floorObject.name}

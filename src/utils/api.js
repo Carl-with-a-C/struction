@@ -14,15 +14,12 @@ export const getProjectDetails = (projectName) => {
     return res.data.result;
   });
 };
-//set new marker and response with updated object of markers:
 export const postMarker = (projectName, newPinBody, user) => {
-  ///api/markers/:project_name'
   const markerBody = {};
   return beStructionApi.post("/markers/" + projectName, markerBody).then();
 };
 
 export const deleteMarker = (projectName, markerId) => {
-  //: '/api/:project_name/:marker_id'
   return beStructionApi.delete(`/${projectName}/${markerId}`);
 };
 

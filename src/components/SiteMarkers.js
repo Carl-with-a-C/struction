@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { React, useState, useEffect } from "react";
 
 import { Marker } from "react-leaflet";
-// marker svg to be imported
 import MarkerPopup from "./MarkerPopup";
 import pinIcon from "../assets/DefaultPin.svg";
 import L from "leaflet";

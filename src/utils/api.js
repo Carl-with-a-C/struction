@@ -39,8 +39,8 @@ export const deleteMarker = (projectName, markerId) => {
 // "photos_after": ["url to photo 1", "url to photo 2"]
 // }}
 
-export const patchMarker = (markerId, patch) => {
-  console.log(markerId)
+export const patchMarker = (projectName, markerId, patch) => {
+  console.log(markerId);
   const patchBody = patch;
-  return beStructionApi.patch(`/project1/${markerId}`, patchBody).then();
+  return beStructionApi.patch(`/${projectName}/${markerId}`, patchBody).then();
 };

@@ -2,7 +2,6 @@ import React from "react";
 import { MapContainer, ImageOverlay, LayersControl } from "react-leaflet";
 import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import testMarkerData from "../DB/testData/testMarkerData.json";
 import SiteMarkers from "./SiteMarkers";
 import L, { latLng } from "leaflet";
 import {
@@ -14,11 +13,6 @@ import {
 } from "react-pro-sidebar";
 
 const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
-  // const [currentFloor, setCurrentFloor] = useState(0);
-  // let floorName = testMarkerData.markers[0].locations[currentFloor].floorName;
-  // let floorURL = testMarkerData.markers[0].locations[currentFloor].floorURL;
-
-  // const [floorImage, setFloorImage] = useState();
   const [bounds, setBounds] = useState([
     [0, 2600],
     [1740, 0],
@@ -38,21 +32,7 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
       console.log(err);
     };
   }, [floorImage]);
-
-  //Takes Floor data from testMarkerData -WILL CHANGE TO API DATA!!!
-
-  //CURRENTLY - LOGIC SET FOR 2 FLOORS - NEED TO CREATE SOLUTION FOR MULTIPLE FLOORS
-
-  const handleFloorBtnClick = (e) => {
-    // For CLEAN FLOOR BUTTON TOGGLE
-    // currentFloor === 0
-    //   ? setCurrentFloor(currentFloor + 1)
-    //   : setCurrentFloor(currentFloor - 1);
-    // setFloorImage(e.floorURL);
-  };
-
   //Bounds need to be dynamically adjusted to size of image - TASK 1
-
   return floorImage ? (
     <main className="siteMap">
       <MapContainer
@@ -66,44 +46,9 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
         minZoom={-3}
         maxZoom={1}
       >
-        <ImageOverlay
-          //HARDCODED - needs to come from API
-          url={floorImage}
-          bounds={bounds}
-        >
-          {/* <button
-            className="floorButton"
-            onClick={() => {
-              handleFloorBtnClick();
-            }}
-          >
-            {currentFloor === 0
-              ? `${currentFloorName} >`
-              : `< ${currentFloorName}`}
-          </button> */}
-
-          {/* { <Sidebar className="floorButton">
-            <Menu>
-              { <SubMenu label="Select Floor">
-                {floors.map((floor) => {
-                  return (
-                    <MenuItem
-                      key={floor.floorURL}
-                      label={floor.floorName}
-                      value={floor}
-                      onClick={(e) => {
-                        handleFloorBtnClick(floor);
-                      }}
-                    >
-                      {floor.floorName}
-                    </MenuItem>
-                  );
-                })}
-              </SubMenu> }
-            </Menu>
-          </Sidebar> } */}
-        </ImageOverlay>
+        <ImageOverlay url={floorImage} bounds={bounds}></ImageOverlay>
         <SiteMarkers
+          projectName={projectDetails.project[0].collection}
           markersData={projectDetails.project[1]}
           currFloor={currFloor}
         />

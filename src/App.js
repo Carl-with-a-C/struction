@@ -43,9 +43,11 @@ function App() {
   };
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
-      console.log(res)
+      console.log(res);
       setProjectDetails(res);
       setCurrFloor("");
+      setFloorImage("");
+      setArrFloorsForButton("");
       //Getting a set of images for floors from projectDetails
       setArrFloorsForButton(
         res.project[0].props.locations.map((floorObject) => {

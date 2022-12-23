@@ -11,7 +11,7 @@ const center = {
   lng: -0.09,
 };
 
-const SiteMarkers = ({ markersData, currFloor }) => {
+const SiteMarkers = ({ markersData, currFloor, projectName }) => {
   const [pins, setPins] = useState([]);
   const [activePin, setActivePin] = useState(null);
   const [position, setPosition] = useState(center);
@@ -33,7 +33,7 @@ const SiteMarkers = ({ markersData, currFloor }) => {
           patch1.locationOnDrawing[1] = Math.floor(cords.lng).toString();
           let markerid = markerRef.current.options.value.id;
           const patch = { [markerid]: patch1 };
-          patchMarker(markerid, patch);
+          patchMarker(projectName, markerid, patch);
         }
       },
     }),

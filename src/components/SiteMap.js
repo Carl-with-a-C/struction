@@ -20,13 +20,15 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
   useEffect(() => {
     const img = new Image();
     img.src = floorImage;
+    //Commented out, works wrong
+    //Picture gets resized differently on every upload, resulting in marker coordinates being wrong
 
-    img.onload = () => {
-      setBounds([
-        [0, img.width],
-        [img.height, 0],
-      ]);
-    };
+    // img.onload = () => {
+    //   setBounds([
+    //     [0, img.width],
+    //     [img.height, 0],
+    //   ]);
+    // };
     img.onerror = (err) => {
       console.log("img error");
       console.log(err);

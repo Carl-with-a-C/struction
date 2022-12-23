@@ -40,7 +40,6 @@ export const deleteMarker = (projectName, markerId) => {
 // }}
 
 export const patchMarker = (projectName, markerId, patch) => {
-  console.log(markerId);
   const patchBody = patch;
   return beStructionApi.patch(`/${projectName}/${markerId}`, patchBody).then();
 };

@@ -1,19 +1,53 @@
 import { Fragment } from "react";
-import { React, useState, useEffect } from "react";
-
+import { React, useState, useEffect, useMemo, useRef } from "react";
+import {patchMarker} from "../utils/api.js"
 import { Marker } from "react-leaflet";
 import MarkerPopup from "./MarkerPopup";
 import pinIcon from "../assets/DefaultPin.svg";
 import L from "leaflet";
 
+
+const center = {
+  lat: 51.505,
+  lng: -0.09,
+}
+
 const SiteMarkers = ({ markersData, currFloor }) => {
   const [pins, setPins] = useState([]);
+  const [activePin, setActivePin]= useState(null)
+  const [position, setPosition] = useState(center)
+  const markerRef = useRef(null)
   const icon = L.icon({
     iconUrl: pinIcon,
     iconSize: [40, 46],
-    iconAnchor: [20, 46],
+    iconAnchor: [20, 46],   
   });
+ 
+  const eventHandlers = useMemo(
 
+    () => ({
+      dragend() {
+        const marker = markerRef.current
+        if (marker != null) {
+          
+          const cords = marker.getLatLng()
+          console.log(cords.lng)
+          let patch = markerRef.current.options.value
+          
+          console.log(Math.floor(cords.lat).toString())
+          patch.locationOnDrawing[0] = Math.floor(cords.lat).toString()
+          patch.locationOnDrawing[1] = Math.floor(cords.lng).toString()
+          let markerid = markerRef.current.options.value.id
+
+          console.log(patch)
+          patchMarker(markerid, patch)
+          
+        }
+      },
+    }),
+    [], 
+  
+  )
   useEffect(() => {
     const returnedPins = markersData.map((marker) => {
       if (marker.location === currFloor)
@@ -22,8 +56,15 @@ const SiteMarkers = ({ markersData, currFloor }) => {
             key={marker.number}
             position={marker.locationOnDrawing}
             icon={icon}
+            ref={markerRef}
+            value={marker}
+            eventHandlers={eventHandlers}
+           
             draggable={true}
-            autoPan={true}
+            autoPan={false}
+            
+            
+          
           >
             <MarkerPopup marker={marker} />
           </Marker>

@@ -43,7 +43,6 @@ function App() {
   };
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
-      console.log(res);
       setProjectDetails(res);
       setCurrFloor("");
       setFloorImage("");

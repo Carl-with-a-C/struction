@@ -48,6 +48,8 @@ function App() {
       console.log(res.project[1])
       setNewMarkers(res.project[1])
       setCurrFloor("");
+      setFloorImage("");
+      setArrFloorsForButton("");
       //Getting a set of images for floors from projectDetails
       setArrFloorsForButton(
         res.project[0].props.locations.map((floorObject) => {

@@ -11,7 +11,9 @@ const center = {
   lng: -0.09,
 };
 
-const SiteMarkers = ({ markersData, currFloor, projectName }) => {
+
+const SiteMarkers = ({ newmarkers, currFloor, projectName}) => {
+
   const [pins, setPins] = useState([]);
   const [activePin, setActivePin] = useState(null);
   const [position, setPosition] = useState(center);
@@ -24,30 +26,29 @@ const SiteMarkers = ({ markersData, currFloor, projectName }) => {
 
   const eventHandlers = useMemo(
     () => ({
-      dragend() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          const cords = marker.getLatLng();
-          let patch1 = markerRef.current.options.value;
-          patch1.locationOnDrawing[0] = Math.floor(cords.lat).toString();
-          patch1.locationOnDrawing[1] = Math.floor(cords.lng).toString();
-          let markerid = markerRef.current.options.value.id;
+      dragend(e) {
+          const cords = e.target.dragging._marker._latlng;
+          let patch1 = e.target.options.value;
+          patch1.locationOnDrawing[0] = cords.lat;
+          patch1.locationOnDrawing[1] = cords.lng;
+          let markerid = e.target.options.value.id;
           const patch = { [markerid]: patch1 };
+
           patchMarker(projectName, markerid, patch);
+
         }
-      },
+      
     }),
     []
   );
   useEffect(() => {
-    const returnedPins = markersData.map((marker) => {
+    const returnedPins = newmarkers.map((marker) => {
       if (marker.location === currFloor)
         return (
           <Marker
-            key={marker.number}
+            key={marker.id}
             position={marker.locationOnDrawing}
             icon={icon}
-            ref={markerRef}
             value={marker}
             eventHandlers={eventHandlers}
             draggable={true}
@@ -59,7 +60,8 @@ const SiteMarkers = ({ markersData, currFloor, projectName }) => {
     });
 
     setPins(returnedPins);
-  }, [currFloor]);
+ 
+  }, [currFloor,newmarkers]);
 
   return <Fragment>{pins}</Fragment>;
 };

@@ -9,12 +9,12 @@ const MarkerPopup = ({ marker }) => {
         <div>Required service: {marker.service}</div>
         <div>Photos:{marker.photos}</div>
         <div>Photos after:{marker.photos_after}</div>
-        <div>
+       {/* <div>
           Measuremenets:{" "}
           {marker.measurements.map((number) => {
             return number + " ";
-          })}
-        </div>
+          })} 
+        </div>  */}
         <div>Completed by: {marker.completedBy}</div>
       </div>
     </Popup>

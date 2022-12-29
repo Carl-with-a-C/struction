@@ -15,7 +15,7 @@ export const getProjectDetails = (projectName) => {
   });
 };
 export const postMarker = (projectName, newPinBody, user) => {
-  const markerBody = {};
+  const markerBody = newPinBody;
   return beStructionApi.post("/markers/" + projectName, markerBody).then();
 };
 

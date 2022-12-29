@@ -1,9 +1,18 @@
 import React from "react";
-import { MapContainer, ImageOverlay, LayersControl } from "react-leaflet";
+import {
+  MapContainer,
+  ImageOverlay,
+  LayersControl,
+  useMapEvents,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import { useState, useEffect } from "react";
+import PostMarker from "./postMarker"
 import "leaflet/dist/leaflet.css";
 import SiteMarkers from "./SiteMarkers";
 import L, { latLng } from "leaflet";
+import pinIcon from "../assets/DefaultPin.svg";
 import {
   Sidebar,
   Menu,
@@ -12,7 +21,9 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 
-const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
+
+const SiteMap = ({ projectDetails, currFloor, floorImage,setNewMarkers,newmarkers }) => {
+
   const [bounds, setBounds] = useState([
     [0, 2600],
     [1740, 0],
@@ -34,7 +45,9 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
       console.log(err);
     };
   }, [floorImage]);
+
   //Bounds need to be dynamically adjusted to size of image - TASK 1
+
   return floorImage ? (
     <main className="siteMap">
       <MapContainer
@@ -48,12 +61,15 @@ const SiteMap = ({ projectDetails, currFloor, floorImage }) => {
         minZoom={-3}
         maxZoom={1}
       >
+
         <ImageOverlay url={floorImage} bounds={bounds}></ImageOverlay>
         <SiteMarkers
           projectName={projectDetails.project[0].collection}
-          markersData={projectDetails.project[1]}
           currFloor={currFloor}
+          newmarkers={newmarkers}
         />
+        <PostMarker currFloor={currFloor}
+        setNewMarkers={setNewMarkers}/>
       </MapContainer>
     </main>
   ) : null;

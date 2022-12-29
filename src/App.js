@@ -22,8 +22,9 @@ function App() {
     },
   });
   const [projectDetails, setProjectDetails] = useState();
+  const [newmarkers,setNewMarkers] = useState([]);
   const [arrFloorsForButton, setArrFloorsForButton] = useState();
-  const [currFloor, setCurrFloor] = useState("ground floor");
+  const [currFloor, setCurrFloor] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [floorImage, setFloorImage] = useState();
 
@@ -43,8 +44,9 @@ function App() {
   };
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
-      console.log(res)
       setProjectDetails(res);
+      console.log(res.project[1])
+      setNewMarkers(res.project[1])
       setCurrFloor("");
       //Getting a set of images for floors from projectDetails
       setArrFloorsForButton(
@@ -110,9 +112,11 @@ function App() {
         ) : null}
       </Sidebar>
       <SiteMap
-        projectDetails={projectDetails}
+        newmarkers={newmarkers}
+        setNewMarkers={setNewMarkers}
         currFloor={currFloor}
         floorImage={floorImage}
+        projectDetails={projectDetails}
       />
     </div>
   );

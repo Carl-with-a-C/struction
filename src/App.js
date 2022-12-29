@@ -114,6 +114,7 @@ function App() {
         ) : null}
       </Sidebar>
       <SiteMap
+      user={user.key}
         newmarkers={newmarkers}
         setNewMarkers={setNewMarkers}
         currFloor={currFloor}

@@ -22,7 +22,7 @@ import {
 } from "react-pro-sidebar";
 
 
-const SiteMap = ({ projectDetails, currFloor, floorImage,setNewMarkers,newmarkers }) => {
+const SiteMap = ({ projectDetails, currFloor, floorImage,setNewMarkers,newmarkers,user }) => {
 
   const [bounds, setBounds] = useState([
     [0, 2600],
@@ -69,7 +69,10 @@ const SiteMap = ({ projectDetails, currFloor, floorImage,setNewMarkers,newmarker
           newmarkers={newmarkers}
         />
         <PostMarker currFloor={currFloor}
-        setNewMarkers={setNewMarkers}/>
+        setNewMarkers={setNewMarkers}
+        projectName={projectDetails.project[0].collection}
+        user={user}
+        />
       </MapContainer>
     </main>
   ) : null;

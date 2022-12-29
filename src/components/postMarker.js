@@ -3,7 +3,7 @@ import { postMarker } from "../utils/api";
 // import { useContext } from 'react';
 // import { UserContext } from './user';
 
-const PostMarker = ({ currFloor, setNewMarkers }) => {
+const PostMarker = ({ currFloor, setNewMarkers,projectName,user }) => {
   const [input, setInput] = useState({});
   const [sending, setsending] = useState(false);
   // const user = useContext(UserContext)
@@ -29,18 +29,18 @@ const PostMarker = ({ currFloor, setNewMarkers }) => {
   const handleSubmitNewmarker = (event) => {
     setsending(true);
     event.preventDefault();
-    const user = `offline_user-${Date.now()}`;
+    const user1 = user+Date.now();
     const post = {
-      [user]: {
+      [user1]: {
         ...input,
-        id: user,
+        id: user1,
         location: currFloor,
         locationOnDrawing: ["100", "100"],
         photos: ["url to photo 1", "url to photo 2"],
         photos_after: ["url to photo 1", "url to photo 2"],
       },
     };
-    const projectName = "project1";
+    console.log(post)
     postMarker(projectName, post).then((res) => {
       setNewMarkers(res.data.markers);
     });

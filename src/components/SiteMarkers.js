@@ -11,9 +11,7 @@ const center = {
   lng: -0.09,
 };
 
-
-const SiteMarkers = ({ newmarkers, currFloor, projectName}) => {
-
+const SiteMarkers = ({ newmarkers, currFloor, projectName }) => {
   const [pins, setPins] = useState([]);
   const [activePin, setActivePin] = useState(null);
   const [position, setPosition] = useState(center);
@@ -27,17 +25,15 @@ const SiteMarkers = ({ newmarkers, currFloor, projectName}) => {
   const eventHandlers = useMemo(
     () => ({
       dragend(e) {
-          const cords = e.target.dragging._marker._latlng;
-          let patch1 = e.target.options.value;
-          patch1.locationOnDrawing[0] = cords.lat;
-          patch1.locationOnDrawing[1] = cords.lng;
-          let markerid = e.target.options.value.id;
-          const patch = { [markerid]: patch1 };
+        const cords = e.target.dragging._marker._latlng;
+        let patch1 = e.target.options.value;
+        patch1.locationOnDrawing[0] = cords.lat;
+        patch1.locationOnDrawing[1] = cords.lng;
+        let markerid = e.target.options.value.id;
+        const patch = { [markerid]: patch1 };
 
-          patchMarker(projectName, markerid, patch);
-
-        }
-      
+        patchMarker(projectName, markerid, patch);
+      },
     }),
     []
   );
@@ -60,8 +56,7 @@ const SiteMarkers = ({ newmarkers, currFloor, projectName}) => {
     });
 
     setPins(returnedPins);
- 
-  }, [currFloor,newmarkers]);
+  }, [currFloor, newmarkers]);
 
   return <Fragment>{pins}</Fragment>;
 };

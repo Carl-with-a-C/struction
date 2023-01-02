@@ -22,7 +22,7 @@ function App() {
     },
   });
   const [projectDetails, setProjectDetails] = useState();
-  const [newmarkers,setNewMarkers] = useState([]);
+  const [newmarkers, setNewMarkers] = useState([]);
   const [arrFloorsForButton, setArrFloorsForButton] = useState();
   const [currFloor, setCurrFloor] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -45,8 +45,8 @@ function App() {
   const accessProjectDetails = (projectName) => {
     getProjectDetails(projectName).then((res) => {
       setProjectDetails(res);
-      console.log(res.project[1])
-      setNewMarkers(res.project[1])
+      //getting all markers of project
+      setNewMarkers(res.project[1]);
       setCurrFloor("");
       setFloorImage("");
       setArrFloorsForButton("");
@@ -114,7 +114,7 @@ function App() {
         ) : null}
       </Sidebar>
       <SiteMap
-      user={user.key}
+        user={user.key}
         newmarkers={newmarkers}
         setNewMarkers={setNewMarkers}
         currFloor={currFloor}

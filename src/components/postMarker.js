@@ -3,7 +3,7 @@ import { postMarker } from "../utils/api";
 // import { useContext } from 'react';
 // import { UserContext } from './user';
 
-const PostMarker = ({ currFloor, setNewMarkers,projectName,user }) => {
+const PostMarker = ({ currFloor, setNewMarkers, projectName, user }) => {
   const [input, setInput] = useState({});
   const [sending, setsending] = useState(false);
   // const user = useContext(UserContext)
@@ -29,7 +29,7 @@ const PostMarker = ({ currFloor, setNewMarkers,projectName,user }) => {
   const handleSubmitNewmarker = (event) => {
     setsending(true);
     event.preventDefault();
-    const user1 = user+Date.now();
+    const user1 = user + Date.now();
     const post = {
       [user1]: {
         ...input,
@@ -40,7 +40,7 @@ const PostMarker = ({ currFloor, setNewMarkers,projectName,user }) => {
         photos_after: ["url to photo 1", "url to photo 2"],
       },
     };
-    console.log(post)
+    console.log(post);
     postMarker(projectName, post).then((res) => {
       setNewMarkers(res.data.markers);
     });
@@ -50,47 +50,51 @@ const PostMarker = ({ currFloor, setNewMarkers,projectName,user }) => {
 
   return (
     <form className="floorButton" onSubmit={handleSubmitNewmarker}>
-      <label>
+      <div>
         number
         <input
+          size="30"
           type="text"
           name="number"
-          value={input.number}
+          value={input.number || ""}
           onChange={handleChangeMarker}
         />
-      </label>
-      <label>
+      </div>
+      <div>
         {" "}
         measurements
         <input
+          size="30"
           type="text"
           placeholder="add measurements seperated by a comma"
-          value={input.measurements}
+          value={input.measurements || ""}
           className="textbox"
           name="measurements"
           onChange={handleChangearray}
         />
-      </label>
-      <label>
+      </div>
+      <div>
         service
         <input
+          size="30"
           type="text"
           placeholder="add services seperated by a comma"
           name="service"
-          value={input.service}
+          value={input.service || ""}
           onChange={handleChangearray}
         />
-      </label>
-      <label>
+      </div>
+      <div>
         materialsUsed
         <input
+          size="30"
           type="text"
           placeholder="add materials seperated by a comma"
           name="materialsUsed"
-          value={input.materialsUsed}
+          value={input.materialsUsed || ""}
           onChange={handleChangearray}
         />
-      </label>
+      </div>
       <button className="submitbutton" disabled={!input || sending === true}>
         submit
       </button>
